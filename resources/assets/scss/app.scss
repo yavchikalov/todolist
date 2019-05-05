@@ -1,0 +1,48 @@
+
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+@import 'general';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.input {
+    height: 30px;
+    padding: 5px;
+    border: 1px solid #636363;
+    width: 100%;
+    &--height--full {
+        height: 100%;
+    }
+}
+
+.checkbox {
+    &__input {
+        display: none;
+        &:checked + .checkbox__label:before {
+            background: url('~images/icons/success.svg') no-repeat center;
+            border-color: $green;
+        }
+    }
+    &__label {
+        width: 100%;
+        display: flex;
+        margin: 0;
+        align-items: center;
+        cursor: pointer;
+        &:hover:before {
+            border-color: $green;
+        }
+        &:before {
+            content: '';
+            width: 25px;
+            height: 25px;
+            border: 2px solid #636363;
+            display: block;
+            margin-right: 10px;
+        }
+    }
+}

@@ -13,18 +13,21 @@
                 <label for="hide-success-todo" class="checkbox__label">Скрыть выполненные дела</label>
             </div>
         </div>
-        <div class="todo-list__items" v-if='todoListItems.length'>
-            <div class="todo-list__todo-item" v-for='({ id, name, status }, key) in todoListItems' :key='id'>
-                <todo-item
-                    :idItem='id'
-                />
+        <div class="todo-list__loader" v-if='loader'>Загрузка...</div>
+        <div v-else>
+            <div class="todo-list__items" v-if='todoListItems.length'>
+                <div class="todo-list__todo-item" v-for='({ id, name, status }, key) in todoListItems' :key='id'>
+                    <todo-item
+                        :idItem='id'
+                    />
+                </div>
             </div>
-        </div>
-        <div class="todo-list__empty" v-else-if='todoList.length'>
-            Все дела выполнены!
-        </div>
-        <div class="todo-list__empty" v-else>
-            На сегодня нет никаких дел!
+            <div class="todo-list__empty" v-else-if='todoList.length'>
+                Все дела выполнены!
+            </div>
+            <div class="todo-list__empty" v-else>
+                На сегодня нет никаких дел!
+            </div>
         </div>
     </div>
 </template>
@@ -35,8 +38,13 @@
         data() {
             return {
                 input: '',
-                hideSuccessTodo: false
+                hideSuccessTodo: false,
+                loader: true
             }
+        },
+        async created() {
+            await this.getTodoList();
+            this.loader = false;
         },
         computed: {
             todoListExceptSuccess() {
@@ -50,14 +58,11 @@
         methods: {
             addTodoItem() {
                 if (this.input.trim()) {
-                    this.addTodo({ id: this.generateId(), name: this.input, status: false });
+                    this.addTodo({ name: this.input });
                     this.input = '';
                 }
             },
-            generateId() {
-                return Math.random().toString(16).slice(2, 8);
-            },
-            ...mapActions('main', ['addTodo'])
+            ...mapActions('main', ['addTodo', 'getTodoList'])
         }
     }
 </script>
@@ -101,8 +106,11 @@
         margin: 10px;
     }
     &__hide-success-todo {
-      padding: 10px 10px;
-      background: #e3e3e3;
+        padding: 10px 10px;
+        background: #e3e3e3;
+    }
+    &__loader {
+        padding: 10px;
     }
 
 }

@@ -1,4 +1,7 @@
 export default {
+    SET_TODO_LIST(state, payload) {
+        state.todoList = payload;
+    },
     ADD_TODO(state, payload) {
         state.todoList.push(payload);
     },

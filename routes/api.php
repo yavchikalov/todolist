@@ -13,6 +13,14 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+
+Route::prefix('todolist')->group(function() {
+    Route::get('/', 'Api\TodoListController@index');
+    Route::post('/create', 'Api\TodoListController@create');
+    Route::patch('/update/{id}', 'Api\TodoListController@update');
+    Route::delete('/delete/{id}', 'Api\TodoListController@delete');
 });

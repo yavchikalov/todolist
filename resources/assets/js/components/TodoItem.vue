@@ -23,7 +23,7 @@
         name: 'todo-item',
         props: {
             idItem: {
-                type: String,
+                type: Number,
                 required: true
             }
         },
